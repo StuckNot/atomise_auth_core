@@ -18,7 +18,7 @@ dependencies:
   get_it: ^9.2.1
   atomise_network:
     git:
-      url: git@github.com:sunpreet-singh_atomise/atomise_network.git
+      url: https://github.com/sunpreet-singh_atomise/atomise_network.git
       ref: v0.2.0
 
 dev_dependencies:
