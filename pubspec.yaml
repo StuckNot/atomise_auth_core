@@ -1,0 +1,39 @@
+name: atomise_auth_core
+description: "Core authentication for Atomise Flutter apps: session lifecycle, token storage, and an auth-aware Chopper interceptor. Login methods build on top."
+version: 0.1.0
+homepage:
+publish_to: 'none'
+
+environment:
+  sdk: ^3.11.5
+  flutter: ">=1.17.0"
+
+dependencies:
+  chopper: ^8.6.0
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  fpdart: ^1.2.0
+  freezed_annotation: ^3.1.0
+  get_it: ^9.2.1
+  atomise_network:
+    git:
+      url: git@github.com:sunpreet-singh_atomise/atomise_network.git
+      ref: v0.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.15.0
+  freezed: ^3.2.5
+  mocktail: ^1.0.5
+  bloc_test: ^10.0.0
+  http: ^1.6.0
+
+flutter:
+
+  # To add assets to your package, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
