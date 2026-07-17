@@ -199,3 +199,4 @@ print(auth.state); // unauthenticated (storage cleared)
 Clone the repo and run flutter test. The test names read like a checklist and explain exactly how each part behaves (token attachment, 401 refresh, logout, etc.). This is the best way to understand the package.
 
 
+<img src='https://github.com/sunpreet-singh_atomise/atomise_auth_core/blob/main/dependency_graph.png?raw=true'>
