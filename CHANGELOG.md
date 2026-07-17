@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- `atomise_network` dependency now resolves over HTTPS instead of SSH — no
+  functional change, transport only.
+
 ## 0.1.0
 
 Initial release.

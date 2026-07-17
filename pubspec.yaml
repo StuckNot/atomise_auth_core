@@ -1,6 +1,6 @@
 name: atomise_auth_core
 description: "Core authentication for Atomise Flutter apps: session lifecycle, token storage, and an auth-aware Chopper interceptor. Login methods build on top."
-version: 0.1.0
+version: 0.1.1
 homepage:
 publish_to: 'none'
 
