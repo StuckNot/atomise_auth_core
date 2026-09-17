@@ -19,7 +19,7 @@ dependencies:
   railway_chopper:
     git:
       url: https://github.com/StuckNot/railway_chopper.git
-      ref: main        # or a tag, if railway_chopper has one — check `git tag`
+      ref: main        
 
 dev_dependencies:
   flutter_test:
