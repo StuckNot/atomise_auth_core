@@ -1,4 +1,4 @@
-import 'package:atomise_network/atomise_network.dart';
+import 'package:railway_chopper/railway_chopper.dart';
 
 import '../../domain/failures/auth_failure.dart';
 

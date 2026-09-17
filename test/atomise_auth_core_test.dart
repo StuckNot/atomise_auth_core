@@ -1,5 +1,5 @@
 import 'package:atomise_auth_core/atomise_auth_core.dart';
-import 'package:atomise_network/atomise_network.dart';
+import 'package:railway_chopper/railway_chopper.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';

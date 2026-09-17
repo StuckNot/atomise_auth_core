@@ -16,10 +16,10 @@ dependencies:
   fpdart: ^1.2.0
   freezed_annotation: ^3.1.0
   get_it: ^9.2.1
-  atomise_network:
+  railway_chopper:
     git:
-      url: https://github.com/sunpreet-singh_atomise/atomise_network.git
-      ref: v0.2.0
+      url: https://github.com/StuckNot/railway_chopper.git
+      ref: main        # or a tag, if railway_chopper has one — check `git tag`
 
 dev_dependencies:
   flutter_test:

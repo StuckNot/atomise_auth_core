@@ -17,8 +17,22 @@ package (e.g. `atomise_auth_otp`) that depends on this one. A consuming app
 depends on `atomise_auth_core` for session management plus whichever method
 package(s) it actually uses.
 
-It builds on [`atomise_network`](https://github.com/sunpreet-singh_atomise/atomise_network)
+It builds on [`railway_chopper`](https://github.com/StuckNot/railway_chopper)
 and maps its transport-level `NetworkFailure` into the domain-level `AuthFailure`.
+
+## Part of the Atomise auth family
+
+Small, composable packages with clear boundaries. This package is the
+foundation; each login method is a separate package that depends on it.
+
+| Package | Role |
+| --- | --- |
+| **atomise_auth_core** _(this repo)_ | Session lifecycle: token storage, attachment, single-flight 401 refresh, logout, app-wide auth state. Method-agnostic. |
+| [`atomise_auth_otp`](https://github.com/StuckNot/atomise_auth_otp) | OTP / phone-number login method. Produces an `AuthSession`, built on core. |
+| [`atomise_auth_google`](https://github.com/StuckNot/atomise_auth_google) | Google sign-in login method. Produces an `AuthSession`, built on core. |
+| [`railway_chopper`](https://github.com/StuckNot/railway_chopper) | Chopper client factory + `Response → Either<NetworkFailure, T>` mapper. The HTTP transport foundation this package builds on. |
+
+An app depends on `atomise_auth_core` plus whichever method package(s) it uses.
 
 ## What's in here
 
@@ -31,7 +45,7 @@ and maps its transport-level `NetworkFailure` into the domain-level `AuthFailure
 | `RefreshSession`, `Logout` | Session use cases. `RefreshSession` persists the new session; `Logout` clears storage even if the backend call fails. |
 | `AuthCubit` / `AuthState` | App-wide session guardian. `checkInitialSession()` resolves `unknown` → authenticated/unauthenticated at startup; `signOut()` logs out. |
 | `AuthInterceptor` | Attaches the access token to every request; on a `401`, single-flights a refresh and retries once. Reads the token from `TokenStorage`. |
-| `mapNetworkFailureToAuthFailure` | Maps `atomise_network`'s `NetworkFailure` into `AuthFailure`. |
+| `mapNetworkFailureToAuthFailure` | Maps `railway_chopper`'s `NetworkFailure` into `AuthFailure`. |
 | `registerAuthModule` (via `atomise_auth_core_di.dart`) | Wires the session lifecycle + interceptor into get_it on top of the app-registered `TokenStorage` and `SessionRepository`. |
 
 ## What's NOT in here
@@ -100,11 +114,11 @@ Consumed via pinned git tags, not a moving branch:
 dependencies:
   atomise_auth_core:
     git:
-      url: git@github.com:sunpreet-singh_atomise/atomise_auth_core.git
-      ref: v0.1.0
+      url: https://github.com/StuckNot/atomise_auth_core.git
+      ref: v0.1.1
 ```
 
-Depends on `atomise_network` (pinned) and follows semver: PATCH for fixes,
+Depends on `railway_chopper` (pinned) and follows semver: PATCH for fixes,
 MINOR for additive changes, MAJOR for breaking changes to the public surface.
 
 ## Development
@@ -136,13 +150,13 @@ Make a new Flutter project (or use any sample project you have).
 dependencies:
   atomise_auth_core:
     git:
-      url: git@github.com:sunpreet-singh_atomise/atomise_auth_core.git
-      ref: v0.1.0
+      url: https://github.com/StuckNot/atomise_auth_core.git
+      ref: v0.1.1
   get_it: ^9.2.1
   fpdart: ^1.2.0
 ```
 
-Then run flutter pub get. (atomise_network comes automatically, no need to add it.)
+Then run flutter pub get. (`railway_chopper` comes automatically, no need to add it.)
 
 **Step 3 — Add two small dummy classes -**
 The package needs you to provide storage and a backend. For testing, use these simple dummy versions:
@@ -199,4 +213,4 @@ print(auth.state); // unauthenticated (storage cleared)
 Clone the repo and run flutter test. The test names read like a checklist and explain exactly how each part behaves (token attachment, 401 refresh, logout, etc.). This is the best way to understand the package.
 
 
-<img src='https://github.com/sunpreet-singh_atomise/atomise_auth_core/blob/main/dependency_graph.png?raw=true'>
+<img src='dependency_graph.png'>
