@@ -1,4 +1,4 @@
-# atomise_auth_core
+# auth_core
 
 The auth foundation for Atomise Flutter apps — the **session lifecycle** (token
 storage, attachment, refresh, logout, app-wide status) and the shared types
@@ -14,7 +14,7 @@ an auth-aware Chopper interceptor with single-flight 401 refresh.
 This package is **method-agnostic**. It knows nothing about *how* a session is
 acquired — OTP, password, Google, etc. Each login method lives in its own
 package (e.g. `atomise_auth_otp`) that depends on this one. A consuming app
-depends on `atomise_auth_core` for session management plus whichever method
+depends on `auth_core` for session management plus whichever method
 package(s) it actually uses.
 
 It builds on [`railway_chopper`](https://github.com/StuckNot/railway_chopper)
@@ -27,12 +27,12 @@ foundation; each login method is a separate package that depends on it.
 
 | Package | Role |
 | --- | --- |
-| **atomise_auth_core** _(this repo)_ | Session lifecycle: token storage, attachment, single-flight 401 refresh, logout, app-wide auth state. Method-agnostic. |
+| **auth_core** _(this repo)_ | Session lifecycle: token storage, attachment, single-flight 401 refresh, logout, app-wide auth state. Method-agnostic. |
 | [`atomise_auth_otp`](https://github.com/StuckNot/atomise_auth_otp) | OTP / phone-number login method. Produces an `AuthSession`, built on core. |
 | [`atomise_auth_google`](https://github.com/StuckNot/atomise_auth_google) | Google sign-in login method. Produces an `AuthSession`, built on core. |
 | [`railway_chopper`](https://github.com/StuckNot/railway_chopper) | Chopper client factory + `Response → Either<NetworkFailure, T>` mapper. The HTTP transport foundation this package builds on. |
 
-An app depends on `atomise_auth_core` plus whichever method package(s) it uses.
+An app depends on `auth_core` plus whichever method package(s) it uses.
 
 ## What's in here
 
@@ -46,12 +46,12 @@ An app depends on `atomise_auth_core` plus whichever method package(s) it uses.
 | `AuthCubit` / `AuthState` | App-wide session guardian. `checkInitialSession()` resolves `unknown` → authenticated/unauthenticated at startup; `signOut()` logs out. |
 | `AuthInterceptor` | Attaches the access token to every request; on a `401`, single-flights a refresh and retries once. Reads the token from `TokenStorage`. |
 | `mapNetworkFailureToAuthFailure` | Maps `railway_chopper`'s `NetworkFailure` into `AuthFailure`. |
-| `registerAuthModule` (via `atomise_auth_core_di.dart`) | Wires the session lifecycle + interceptor into get_it on top of the app-registered `TokenStorage` and `SessionRepository`. |
+| `registerAuthModule` (via `auth_core_di.dart`) | Wires the session lifecycle + interceptor into get_it on top of the app-registered `TokenStorage` and `SessionRepository`. |
 
 ## What's NOT in here
 
 - **Login methods** — OTP, password, social, registration. Each lives in its
-  own package depending on this one. `atomise_auth_core` ships no `LoginBloc`.
+  own package depending on this one. `auth_core` ships no `LoginBloc`.
 - **Repository implementations** — `TokenStorage` and `SessionRepository` are
   interfaces. The app provides the concrete adapters (backend/storage-specific)
   and registers them in get_it.
@@ -62,9 +62,9 @@ An app depends on `atomise_auth_core` plus whichever method package(s) it uses.
 
 Two barrels, two audiences:
 
-- `package:atomise_auth_core/atomise_auth_core.dart` — types only (`AuthSession`,
+- `package:auth_core/auth_core.dart` — types only (`AuthSession`,
   `AuthFailure`, `AuthCubit`, …). Imported by UI / feature code. No get_it.
-- `package:atomise_auth_core/atomise_auth_core_di.dart` — `registerAuthModule` plus a
+- `package:auth_core/auth_core_di.dart` — `registerAuthModule` plus a
   re-export of the types barrel. Imported by the composition root only.
 
 UI code never sees the service locator; the composition root gets everything
@@ -75,7 +75,7 @@ from one import.
 In the app's composition root:
 
 ```dart
-import 'package:atomise_auth_core/atomise_auth_core_di.dart';
+import 'package:auth_core/auth_core_di.dart';
 
 // 1. Register the app's own implementations.
 sl.registerLazySingleton<TokenStorage>(() => SecureTokenStorage());
@@ -112,13 +112,13 @@ Consumed via pinned git tags, not a moving branch:
 
 ```yaml
 dependencies:
-  atomise_auth_core:
+  auth_core:
     git:
-      url: https://github.com/StuckNot/atomise_auth_core.git
-      ref: v0.1.1
+      url: https://github.com/StuckNot/auth_core.git
+      ref: v0.2.0
 ```
 
-Depends on `railway_chopper` (pinned) and follows semver: PATCH for fixes,
+Depends on [`railway_chopper`](https://pub.dev/packages/railway_chopper) `^0.2.1` (published on pub.dev) and follows semver: PATCH for fixes,
 MINOR for additive changes, MAJOR for breaking changes to the public surface.
 
 ## Development
@@ -148,10 +148,10 @@ Make a new Flutter project (or use any sample project you have).
 
 ```yaml
 dependencies:
-  atomise_auth_core:
+  auth_core:
     git:
-      url: https://github.com/StuckNot/atomise_auth_core.git
-      ref: v0.1.1
+      url: https://github.com/StuckNot/auth_core.git
+      ref: v0.2.0
   get_it: ^9.2.1
   fpdart: ^1.2.0
 ```

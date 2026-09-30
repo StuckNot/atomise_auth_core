@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:atomise_auth_core/atomise_auth_core.dart';
+import 'package:auth_core/auth_core.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+- **Breaking:** package renamed from `atomise_auth_core` to `auth_core`. Update
+  your dependency and imports: `package:atomise_auth_core/atomise_auth_core.dart`
+  becomes `package:auth_core/auth_core.dart`, and `atomise_auth_core_di.dart`
+  becomes `auth_core_di.dart`.
+- `railway_chopper` now resolves from pub.dev (`^0.2.1`) instead of a git ref.
+
 ## 0.1.1
 
 - `atomise_network` dependency now resolves over HTTPS instead of SSH — no

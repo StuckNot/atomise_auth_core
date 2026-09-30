@@ -1,5 +1,5 @@
 // Types-only barrel (no get_it). Imported by UI / feature code; the
-// composition root imports `atomise_auth_core_di.dart` instead, which re-exports
+// composition root imports `auth_core_di.dart` instead, which re-exports
 // this file plus the DI registration.
 
 // mapNetworkFailureToAuthFailure — the app's repository adapters call this at
